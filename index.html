@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>Phone Dealer</title>
+<style>
+:root{--bg:#090d18;--panel:#141b2d;--line:#28334d;--text:#f4f6ff;--muted:#9aa8c7;--accent:#76e4bd}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at top,#253353,#080b13 65%);color:var(--text);font-family:system-ui,-apple-system,Segoe UI,sans-serif;min-height:100vh;display:grid;place-items:center;padding:14px}
+.phone{width:min(100%,390px);height:min(850px,calc(100dvh - 28px));min-height:620px;background:#05070b;border:4px solid #515b70;border-radius:42px;padding:10px;box-shadow:0 25px 80px #000b;position:relative}
+.screen{height:100%;overflow:hidden;border-radius:30px;background:linear-gradient(155deg,#182848,#10182b 55%,#0b1120);display:flex;flex-direction:column;position:relative}
+.status{height:30px;display:flex;justify-content:space-between;padding:7px 17px 0;font-size:11px;font-weight:700}
+.notch{position:absolute;top:7px;left:50%;transform:translateX(-50%);width:90px;height:20px;background:#05070b;border-radius:14px;z-index:2}
+.top{padding:16px 18px 8px;display:flex;justify-content:space-between;align-items:center}.brand{font-weight:900;letter-spacing:.3px}.money{font-size:12px;background:#0a1325cc;border:1px solid #ffffff20;border-radius:12px;padding:8px 10px;color:var(--accent);font-weight:800}
+.home{flex:1;padding:10px 16px 16px;display:flex;flex-direction:column}
+.greeting{padding:18px 5px 22px}.greeting small{color:#b7c7e7}.greeting h1{font-size:29px;margin:5px 0}.greeting p{font-size:13px;color:#c2cee6;margin:0}
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:20px}.stat{background:#ffffff0d;border:1px solid #ffffff17;border-radius:17px;padding:12px}.stat small{color:var(--muted);font-size:11px}.stat strong{display:block;font-size:18px;margin-top:5px}
+.apps{display:grid;grid-template-columns:repeat(3,1fr);gap:19px 10px;margin-top:7px}.app{border:0;background:none;color:white;display:flex;flex-direction:column;align-items:center;gap:7px;font:inherit;font-size:11px;cursor:pointer}.appico{height:58px;width:58px;border-radius:19px;display:grid;place-items:center;font-size:27px;box-shadow:inset 0 1px 0 #ffffff40,0 7px 15px #0003;border:1px solid #ffffff20}.shop{background:linear-gradient(145deg,#46bda0,#177d82)}.stock{background:linear-gradient(145deg,#7d8fff,#4646a8)}.bank{background:linear-gradient(145deg,#ffca72,#bd702e)}.repair{background:linear-gradient(145deg,#c58cff,#7d4cc5)}.clients{background:linear-gradient(145deg,#ff8ca4,#b93e72)}.history{background:linear-gradient(145deg,#93a9c6,#4a668a)}.bonus{background:linear-gradient(145deg,#ffe78b,#e39a36)}.settings{background:linear-gradient(145deg,#a8b6c9,#536477)}
+.dock{margin-top:auto;display:flex;justify-content:space-around;padding:13px 5px 8px;background:#ffffff0b;border:1px solid #ffffff16;border-radius:20px}
+.homebtn{height:4px;width:100px;border-radius:4px;background:#ffffffb0;margin:8px auto 3px}
+.view{display:none;flex:1;min-height:0;flex-direction:column}.view.active{display:flex}.viewhead{display:flex;align-items:center;gap:12px;padding:12px 16px;border-bottom:1px solid #ffffff18}.back{border:1px solid #ffffff22;color:white;background:#ffffff10;border-radius:12px;padding:8px 12px;font-size:18px}.viewhead h2{font-size:18px;margin:0}.content{padding:15px;overflow:auto;flex:1}.card{background:#ffffff0c;border:1px solid #ffffff1a;border-radius:17px;padding:13px;margin-bottom:10px}.card h3{font-size:15px;margin:0 0 6px}.muted{color:var(--muted);font-size:12px}.row{display:flex;align-items:center;justify-content:space-between;gap:10px}.btn{border:0;border-radius:12px;padding:10px 13px;background:var(--accent);color:#092019;font-weight:800;cursor:pointer}.btn.secondary{background:#283653;color:#e8efff;border:1px solid #ffffff1a}.btn:disabled{opacity:.35}.phoneemoji{font-size:30px}.tag{font-size:10px;border-radius:7px;padding:4px 7px;background:#243a4d;color:#9bf3d1;display:inline-block}.notice{background:#132d2a;border:1px solid #2b6a5b;color:#b7ffe7;padding:10px;border-radius:12px;font-size:12px;margin-bottom:12px}.empty{text-align:center;padding:32px 10px;color:var(--muted)}.logline{border-bottom:1px solid #ffffff12;padding:10px 0;font-size:12px}.input{width:100%;padding:11px;border-radius:11px;background:#0c1425;color:white;border:1px solid #ffffff25;margin:6px 0 12px}
+@media(max-height:680px){.phone{min-height:0;height:calc(100dvh - 16px)}.greeting{padding:10px 5px 13px}.apps{gap:12px 8px}.appico{height:50px;width:50px}.stats{margin-bottom:12px}}
+</style>
+</head>
+<body>
+<div class="phone"><div class="screen">
+<div class="notch"></div><div class="status"><span id="clock">19:24</span><span>◆ 5G ▰</span></div>
+<div class="top"><div class="brand">📱 PHONE DEALER</div><div class="money" id="moneyTop">€ 1 500</div></div>
+<div class="home" id="home">
+ <div class="greeting"><small>ТВОЙ БИЗНЕС • УРОВЕНЬ <span id="levelTop">1</span></small><h1>Привет, дилер!</h1><p>Покупай смартфоны, ремонтируй и продавай дороже.</p></div>
+ <div class="stats"><div class="stat"><small>Баланс</small><strong id="homeMoney">€ 1 500</strong></div><div class="stat"><small>Продано телефонов</small><strong id="soldCount">0</strong></div></div>
+ <div class="apps">
+  <button class="app" onclick="openView('shop')"><span class="appico shop">🛍️</span>Магазин</button>
+  <button class="app" onclick="openView('stock')"><span class="appico stock">📦</span>Склад</button>
+  <button class="app" onclick="openView('bank')"><span class="appico bank">🏦</span>Банк</button>
+  <button class="app" onclick="openView('repair')"><span class="appico repair">🛠️</span>Ремонт</button>
+  <button class="app" onclick="openView('clients')"><span class="appico clients">🧑‍💼</span>Клиенты</button>
+  <button class="app" onclick="openView('history')"><span class="appico history">📜</span>История</button>
+  <button class="app" onclick="dailyBonus()"><span class="appico bonus">🎁</span>Бонус</button>
+  <button class="app" onclick="openView('settings')"><span class="appico settings">⚙️</span>Настройки</button>
+ </div>
+ <div class="dock"><span>📞</span><span>💬</span><span>🌐</span><span>📷</span></div>
+</div>
+<div class="view" id="shop"><div class="viewhead"><button class="back" onclick="goHome()">‹</button><h2>Магазин смартфонов</h2></div><div class="content" id="shopContent"></div></div>
+<div class="view" id="stock"><div class="viewhead"><button class="back" onclick="goHome()">‹</button><h2>Мой склад</h2></div><div class="content" id="stockContent"></div></div>
+<div class="view" id="bank"><div class="viewhead"><button class="back" onclick="goHome()">‹</button><h2>Банк</h2></div><div class="content" id="bankContent"></div></div>
+<div class="view" id="repair"><div class="viewhead"><button class="back" onclick="goHome()">‹</button><h2>Мастерская</h2></div><div class="content" id="repairContent"></div></div>
+<div class="view" id="clients"><div class="viewhead"><button class="back" onclick="goHome()">‹</button><h2>Клиенты</h2></div><div class="content" id="clientsContent"></div></div>
+<div class="view" id="history"><div class="viewhead"><button class="back" onclick="goHome()">‹</button><h2>История бизнеса</h2></div><div class="content" id="historyContent"></div></div>
+<div class="view" id="settings"><div class="viewhead"><button class="back" onclick="goHome()">‹</button><h2>Настройки</h2></div><div class="content"><div class="card"><h3>Сохранение</h3><p class="muted">Прогресс автоматически сохраняется на этом устройстве.</p><button class="btn secondary" onclick="exportSave()">Экспорт сохранения</button></div><div class="card"><h3>Новая игра</h3><p class="muted">Весь текущий прогресс будет сброшен.</p><button class="btn" onclick="resetGame()">Начать заново</button></div><div class="card"><h3>Phone Dealer</h3><p class="muted">Прототип игры • версия 1.0</p></div></div></div>
+<div class="homebtn"></div>
+</div></div>
+<script>
+const catalog=[
+ {name:"Pixel Mini",emoji:"📱",price:180,sell:260,quality:1},
+ {name:"Galaxy A Lite",emoji:"📱",price:260,sell:370,quality:1},
+ {name:"iPhone SE",emoji:"📱",price:390,sell:540,quality:2},
+ {name:"Galaxy S",emoji:"📱",price:620,sell:820,quality:2},
+ {name:"iPhone Pro",emoji:"📱",price:850,sell:1150,quality:3},
+ {name:"Fold Max",emoji:"📲",price:1150,sell:1550,quality:3},
+ {name:"Titan Ultra",emoji:"📲",price:1600,sell:2200,quality:4}
+];
+let state={money:1500,inventory:[],sold:0,level:1,xp:0,loan:0,history:[],bonusDay:"",nextId:1};
+function euro(n){return "€ "+Math.round(n).toLocaleString("ru-RU")}
+function save(){localStorage.setItem("phoneDealerSave",JSON.stringify(state));renderTop()}
+function load(){try{const x=JSON.parse(localStorage.getItem("phoneDealerSave"));if(x)state={...state,...x}}catch(e){}renderAll()}
+function log(s){state.history.unshift(new Date().toLocaleTimeString("ru-RU",{hour:"2-digit",minute:"2-digit"})+" — "+s);state.history=state.history.slice(0,60)}
+function renderTop(){document.getElementById("moneyTop").textContent=euro(state.money);document.getElementById("homeMoney").textContent=euro(state.money);document.getElementById("soldCount").textContent=state.sold;document.getElementById("levelTop").textContent=state.level}
+function openView(id){document.getElementById("home").style.display="none";document.querySelectorAll(".view").forEach(v=>v.classList.remove("active"));document.getElementById(id).classList.add("active");renderAll()}
+function goHome(){document.querySelectorAll(".view").forEach(v=>v.classList.remove("active"));document.getElementById("home").style.display="flex";renderTop()}
+function renderAll(){renderTop();renderShop();renderStock();renderBank();renderRepair();renderClients();renderHistory()}
+function renderShop(){let el=document.getElementById("shopContent");el.innerHTML='<div class="notice">Покупай телефоны по оптовой цене и продавай клиентам с прибылью.</div>'+catalog.map((p,i)=>`<div class="card"><div class="row"><span class="phoneemoji">${p.emoji}</span><div style="flex:1"><h3>${p.name}</h3><div class="muted">Качество ${p.quality}/4 · Продажа до ${euro(p.sell)}</div></div><div style="text-align:right"><b>${euro(p.price)}</b><br><button class="btn" onclick="buy(${i})" ${state.money<p.price?"disabled":""}>Купить</button></div></div></div>`).join("")}
+function buy(i){let p=catalog[i];if(state.money<p.price)return;state.money-=p.price;state.inventory.push({id:state.nextId++,name:p.name,emoji:p.emoji,cost:p.price,sell:p.sell,quality:p.quality,broken:false});log("Куплен "+p.name+" за "+euro(p.price));save();renderAll()}
+function renderStock(){let el=document.getElementById("stockContent");if(!state.inventory.length){el.innerHTML='<div class="empty">📦<br><br>Склад пуст.<br>Загляни в магазин!</div>';return}el.innerHTML=state.inventory.map(p=>`<div class="card"><div class="row"><span class="phoneemoji">${p.emoji}</span><div style="flex:1"><h3>${p.name} ${p.broken?'🔧':''}</h3><div class="muted">Закупка ${euro(p.cost)} · ${p.broken?'Сломан':"Готов к продаже"}</div><span class="tag">${p.broken?'Нужен ремонт':'Можно продать'}</span></div><div style="text-align:right"><b>${euro(p.sell*(p.broken?.55:1))}</b><br><button class="btn" onclick="sell(${p.id})" ${p.broken?"disabled":""}>Продать</button></div></div></div>`).join("")}
+function sell(id){let p=state.inventory.find(x=>x.id===id);if(!p||p.broken)return;let price=p.sell+Math.round((Math.random()-.4)*p.sell*.12);state.money+=price;state.inventory=state.inventory.filter(x=>x.id!==id);state.sold++;state.xp+=10;log("Продан "+p.name+" за "+euro(price)+" (прибыль "+euro(price-p.cost)+")");checkLevel();save();renderAll()}
+function checkLevel(){let l=1+Math.floor(state.xp/50);if(l>state.level){state.level=l;log("Новый уровень: "+l+"!");}}
+function renderBank(){let el=document.getElementById("bankContent");el.innerHTML=`<div class="card"><h3>💳 Твой счёт</h3><div style="font-size:26px;font-weight:900;color:var(--accent)">${euro(state.money)}</div><p class="muted">Кредит: ${euro(state.loan)} · Возврат с процентами 20%</p></div><div class="card"><h3>Быстрый кредит</h3><p class="muted">Получишь €500 сейчас, вернуть нужно €600. Доступен один кредит за раз.</p><button class="btn" onclick="takeLoan()" ${state.loan||state.level<2?"disabled":""}>Взять €500</button>${state.level<2?'<p class="muted">Доступно со 2-го уровня.</p>':''}</div><div class="card"><h3>Погасить кредит</h3><p class="muted">Сумма к возврату: ${euro(state.loan)}</p><button class="btn" onclick="payLoan()" ${!state.loan||state.money<state.loan?"disabled":""}>Погасить</button></div>`}
+function takeLoan(){if(state.loan||state.level<2)return;state.money+=500;state.loan=600;log("Получен кредит €500 (к возврату €600)");save();renderAll()}
+function payLoan(){if(!state.loan||state.money<state.loan)return;state.money-=state.loan;log("Кредит погашен: "+euro(state.loan));state.loan=0;save();renderAll()}
+function renderRepair(){let broken=state.inventory.filter(p=>p.broken);let el=document.getElementById("repairContent");el.innerHTML='<div class="notice">Иногда телефон попадается неисправным. Почини его за 15% цены продажи.</div>'+(broken.length?broken.map(p=>`<div class="card"><div class="row"><div><h3>${p.emoji} ${p.name}</h3><div class="muted">Ремонт: ${euro(p.sell*.15)}</div></div><button class="btn" onclick="fixPhone(${p.id})" ${state.money<p.sell*.15?"disabled":""}>Починить</button></div></div>`).join(""):'<div class="empty">🛠️<br><br>Пока нет сломанных телефонов.</div>')+'<div class="card"><h3>Проверка техники</h3><p class="muted">Потрать €40, чтобы проверить один случайный телефон на складе. Неисправный телефон можно починить.</p><button class="btn secondary" onclick="checkPhone()" '+(state.money<40||!state.inventory.some(p=>!p.broken)?"disabled":"")+'>Проверить за €40</button></div>'}
+function fixPhone(id){let p=state.inventory.find(x=>x.id===id);if(!p||!p.broken||state.money<p.sell*.15)return;let c=Math.round(p.sell*.15);state.money-=c;p.broken=false;log("Починен "+p.name+" за "+euro(c));save();renderAll()}
+function checkPhone(){let p=state.inventory.find(x=>!x.broken);if(!p||state.money<40)return;state.money-=40;if(Math.random()<.35){p.broken=true;log("Проверка: "+p.name+" неисправен!")}else log("Проверка: "+p.name+" исправен.");save();renderAll()}
+function renderClients(){document.getElementById("clientsContent").innerHTML=`<div class="card"><h3>🧑‍💼 Клиенты дня</h3><p class="muted">Покупатели ищут хорошие смартфоны. Продажа приносит опыт и повышает уровень.</p><div class="row"><span>Продано всего</span><b>${state.sold}</b></div><div class="row" style="margin-top:9px"><span>Текущий уровень</span><b>${state.level}</b></div><div class="row" style="margin-top:9px"><span>До следующего уровня</span><b>${50-state.xp%50} опыта</b></div></div><div class="card"><h3>Совет дилеру</h3><p class="muted">Сравнивай цену закупки и продажи. Дорогие модели приносят больше прибыли, но требуют большего стартового капитала.</p></div>`}
+function renderHistory(){let el=document.getElementById("historyContent");el.innerHTML=state.history.length?state.history.map(x=>`<div class="logline">${x}</div>`).join(""):'<div class="empty">📜<br><br>История пока пуста.<br>Твои сделки появятся здесь.</div>'}
+function dailyBonus(){let day=new Date().toDateString();if(state.bonusDay===day){alert("Бонус на сегодня уже получен. Загляни завтра!");return}let amount=250+state.level*50;state.money+=amount;state.bonusDay=day;log("Ежедневный бонус "+euro(amount));save();renderAll();alert("🎁 Ты получил "+euro(amount)+"!")}
+function exportSave(){let blob=new Blob([JSON.stringify(state,null,2)],{type:"application/json"});let a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="phone-dealer-save.json";a.click();URL.revokeObjectURL(a.href)}
+function resetGame(){if(confirm("Точно начать заново? Текущий прогресс исчезнет.")){localStorage.removeItem("phoneDealerSave");state={money:1500,inventory:[],sold:0,level:1,xp:0,loan:0,history:[],bonusDay:"",nextId:1};save();goHome();renderAll()}}
+document.getElementById("clock").textContent=new Date().toLocaleTimeString("ru-RU",{hour:"2-digit",minute:"2-digit"});load();
+</script>
+</body></html>
